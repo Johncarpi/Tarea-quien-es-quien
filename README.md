@@ -29,29 +29,7 @@ Esta práctica involucra los contenidos del módulo de Modelos de Inteligencia A
 
 Programa en Python y/o Prolog la lógica para resolver una partida del juego quién es quién. Puedes construir de manera completa el programa en Prolog. Si prefieres utilizar Python, al menos debes satisfacer el requisito de **construir una base de datos de hechos en Prolog** con los personajes y sus rasgos. 
 
-## Implementación
 
-Si optas por esta segunda opción (Python + Prolog), lee los [casos test](./test/test_quienesquien.py) que proporciono para observar cómo debes utlizar el paquete Python [pyswip](https://github.com/yuce/pyswip) para lanzar consultas a la base de datos Prolog y recibir la respuesta en una estructura Python. En la documentación de [pyswip](https://github.com/yuce/pyswip) encontrarás más ejemplos de uso.
-
-Si optas por la primera de las opciones (empleando únicamente Prolog), puedes utilizar los [casos test](./test/test_quienesquien.py) que proporciono como guía para el desarrollo de la aplicación practicando programación dirigida por casos test (TDD). 
-
-No he especificado ni publicado en el repo la función que codifica el algoritmo de optimización puesto que es decisión de cada uno/a proponer el algoritmo de optimización que considere más adecuado al problema.
-
-**No se permite el uso de ninguna librería externa con algoritmos de búsqueda u optimización**.
-
-El código entregado ha de contener una implementación original (i.e., no reutilizada) del algoritmo seleccionado de entre los de la bibliografía proporcionada.
-
-Cualquier sospecha de implementación derivada de cualquier agente de IA de uso comercial será penalizada.
-
-## Reglas del juego
-
-La lógica del juego es la esperada, salvo porque en las instrucciones del juego vintage se indica que la primera pregunta no puede ser "es hombre" o "es mujer" (consecuencia de la cultura de los 80).
-
-Extrae de la imagen proporcionada (versión vintage del juego) las características de los personajes, de la manera más realista posible, sin inventar ninguno de los rasgos. Respeta los nombres de los personajes.
-
-![Quien es quien - azul](./doc/Quien-es-quien.jpg)
-
-Si alguien necesita jugarlo de manera táctil ;) que me pida el juego.
 
 ## Contesta a las siguientes preguntas antes de desarrollar el programa agente.
 
