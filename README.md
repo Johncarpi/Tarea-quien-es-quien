@@ -66,7 +66,7 @@ Describe el entorno del agente en los términos tratados en la primera unidad di
 Resume las características del entorno en una tabla con el formato:
 
 Entorno de tareas | Completamente / parcialmente Observable| Agentes | Determinista / Estocástico | Episódico / Secuencial | Estático / Dinámico | Discreto / Continuo
-:Quien es quien: | :Parcialmente Observable: | :Multiagente: | :Determinista: | :Secuencial: | :Estático: | :Discreto: |
+:---: | :---: | :---: | :---: | :---: | :---: | :---: |
  RPS | - | - | - | - | - |  - |
 
 ### 3. Algoritmo.
