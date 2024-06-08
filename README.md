@@ -57,7 +57,9 @@ Si alguien necesita jugarlo de manera táctil ;) que me pida el juego.
 
 ### 1. Optimización vs Búsquedas
 
-Justifica por qué este juego puede considerarse un problema de optimización. Consulta la bibliografía recomendada.
+Este tipo de juego el 'quien es quien' puede ser considerado un problema de optimización ya que el programa
+busca en todo momento encontrar a la persona que a sido seleccionada al azar en el menor tiempo posible a traves de una función
+objetivo
 
 ### 2. Entorno del agente
 
@@ -68,6 +70,17 @@ Resume las características del entorno en una tabla con el formato:
 Entorno de tareas | Completamente / parcialmente Observable| Agentes | Determinista / Estocástico | Episódico / Secuencial | Estático / Dinámico | Discreto / Continuo
 :---: | :---: | :---: | :---: | :---: | :---: | :---: |
  Quien es quien | Parcialmente Observable | Multiagente | Determinista | Secuencial | Estático |  Discreto |
+
+- Parcialmente observable: El jugador solo pueden ver su propio tablero, por lo que no conocen ni el tablero ni el personaje que tiene el rival el cual se tiene que adivinar descartando personajes de su propio tablero
+
+- Determinista: las preguntas que se hacen solo tienen respuesta de si o no. No hay incertidumbre a la hora de responderlas.
+
+- Secuencial: El hecho de realizar una pregunta puede cambiar y afectar decisiones futuras, ya que según la característica que se pregunte el tablero
+podrá tener más o menos personajes activos
+
+- Estático: El entorno nunca cambia hasta que se realiza una pregunta.
+
+- Discreto: Existe un número finito tanto de características como de personajes por lo que tambien hay un número finito de preguntas
 
 ### 3. Algoritmo.
 
