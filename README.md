@@ -67,7 +67,7 @@ Resume las características del entorno en una tabla con el formato:
 
 Entorno de tareas | Completamente / parcialmente Observable| Agentes | Determinista / Estocástico | Episódico / Secuencial | Estático / Dinámico | Discreto / Continuo
 :---: | :---: | :---: | :---: | :---: | :---: | :---: |
- RPS | - | - | - | - | - |  - |
+ Quien es quien | Parcialmente Observable | Multiagente | Determinista | Secuencial | Estático |  Discreto |
 
 ### 3. Algoritmo.
 
