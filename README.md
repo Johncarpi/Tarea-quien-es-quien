@@ -73,7 +73,8 @@ Nuestro propósito és diseñar el **programa agente** que implementa la **funci
 
 A partir del modelo general de agente inteligente de la figura:
 
-[Esquema.odg](https://github.com/user-attachments/files/15775064/Esquema.odg)
+![Esquema](https://github.com/Johncarpi/Tarea-quien-es-quien/assets/150828183/97d12fd0-c285-40af-bf11-bc4092829ad4)
+
 
 
 **dibuja un modelo adecuado** al entorno de tareas y a un de los cuatro **tipos de programas agente**:
