@@ -47,9 +47,11 @@ Resume las características del entorno en una tabla con el formato:
 
 Entorno de tareas | Completamente / parcialmente Observable| Agentes | Determinista / Estocástico | Episódico / Secuencial | Estático / Dinámico | Discreto / Continuo
 :---: | :---: | :---: | :---: | :---: | :---: | :---: |
- Quien es quien | Parcialmente Observable | Multiagente | Determinista | Secuencial | Estático |  Discreto |
+ Quien es quien | Parcialmente Observable | Monoagente | Determinista | Secuencial | Estático |  Discreto |
 
 - Parcialmente observable: El jugador solo pueden ver su propio tablero, por lo que no conocen ni el tablero ni el personaje que tiene el rival el cual se tiene que adivinar descartando personajes de su propio tablero
+
+- Monoagente: Se considera un agente Monoagente ya que un solo agente genera las preguntas y recoge las respuestas
 
 - Determinista: las preguntas que se hacen solo tienen respuesta de si o no. No hay incertidumbre a la hora de responderlas.
 
@@ -62,7 +64,8 @@ podrá tener más o menos personajes activos
 
 ### 3. Algoritmo.
 
-Justifica la adecuacióm del algoritmo de optimización que has seleccionado.
+El algoritmo que utilizo consiste en buscar la característica que más se repite de los personajes y preguntar dicha característica para reducir considerablemente
+el número de personajes en pie y acercarse al personaje objetivo.
 
 ### 4. Estrutura del agente
 
@@ -83,13 +86,22 @@ Cada clase de agente combina componentes particulares de un modo particular para
 
 ### 5. Programación lógica
 
-Justifica por qué el "quién es quién" puede considerarse un problema adecuado para ser resuelto empleando el paradigma de programación lógica. Chequea el capítulo 1 del libro _Beginning Java 8 Fundamentals_ disponible en la bibliografía, explicado en las sesiones del curso.
+El quien es quien se puede considerar un problema lógico debido a:
+
+Posee una serie de reglas definidas que facilitan el uso de reglas lógicas para modelar su entrenamiento.
+
+Las preguntas se formulan en términos de características y relaciones entre los personajes, estas se pueden representar fácilmente mediante predicados y relaciones en lógica.
+
+Toda las características de los personajes pueden ser expresadas y tratadas con reglas lógicas.
+
+Puedes aumentar las características de los personajes sin nigun tipo de problema.
 
 ### 6. Base de datos Prolog
 
-Justifica la representación que has implementado mediante estructuras Prolog.
+Para este proyecto he utilizado una base de datos hecha en prolog la cual utilizo para extraer la información para mi programa.
 
-Repasa los contenidos de mis apuntes Prolog disponibles en [Prolog for IA](https://github.com/dfleta/prolog-for-IA).
+La base de datos contiene a los personajes con sus características y contiene las funciones de prolog utilizadas para construir el tablero, contar las características
+y sacar a los personajes segun sus características.
 
 ## Entrega
 

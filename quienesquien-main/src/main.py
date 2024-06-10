@@ -1,65 +1,127 @@
 import random
 from pyswip import Prolog
+import math
+
 
 class WhoIsWhoGame:
+    # Conectamos con prolog
     def __init__(self):
         self.prolog = Prolog()
-        self.prolog.consult('/media/TEIS/a23juancm/Python/quienesquien-main/src/quienesquien.pl')
-        self.tablero = list(self.prolog.query("levantar_tablero(Tablero)"))[0]['Tablero']
-        self.characteristics = ["sombrero", "gafas", "bigote", "barba"]
-        self.target_character = random.choice(self.tablero)
+        self.prolog.consult(
+            "/media/TEIS/a23juancm/Python/Tarea-quien-es-quien/quienesquien-main/src/Test.pl"
+        )
+        # Realizamos una consulta a la base de datos de prolog para levantar el tablero
+        self.tablero = [
+            str(char)
+            for char in list(self.prolog.query("levantar_tablero(Tablero)"))[0][
+                "Tablero"
+            ]
+        ]
 
+        # Definimos las características de los personajes del tablero
+        self.characteristics = [
+            "sombrero",
+            "gafas",
+            "bigote",
+            "barba",
+            "pelo",
+            "altura",
+        ]
+
+        # Ahora escogeremos el personaje a adivinar en el tablero, este se escogera a lo ramdom.
+        self.target_character = random.choice(self.tablero)
+        self.last_question = None
+
+    # Esta es la función donde preguntaremos por la característica 
     def ask_question(self, characteristic):
+        #realizamos la consulta
         query = f"tiene({self.target_character}, {characteristic})"
         result = bool(list(self.prolog.query(query)))
         return result
 
+    # Esta es la función donde buscaremos la mejor pregunta que se puede hacer para intentar reducir en la mayor medida a los personajes.
+    def select_best_question(self):
+        best_question = None
+        best_entropy = float("inf")
+
+        # Esta variable se utiliza para coger el valor de la última pregunta realizada ypara evitar que esta se repita
+        last_index = (
+            self.characteristics.index(self.last_question) if self.last_question else -1
+        )
+
+        # Se incrementa el índice para seleccionar la siguiente característica
+        next_index = (last_index + 1) % len(self.characteristics)
+
+        # Seleccionamos la siguiente característica
+        characteristic = self.characteristics[next_index]
+
+        count_with_query = f"count_characters_with({characteristic}, Count)"
+        count_without_query = f"count_characters_without({characteristic}, Count)"
+        count_with = list(self.prolog.query(count_with_query))[0]["Count"]
+        count_without = list(self.prolog.query(count_without_query))[0]["Count"]
+
+        p_with = count_with / len(self.tablero)
+        p_without = count_without / len(self.tablero)
+
+        entropy = -p_with * math.log2(p_with) if p_with > 0 else 0
+        entropy -= p_without * math.log2(p_without) if p_without > 0 else 0
+
+        if entropy < best_entropy and count_with > 0 and count_without > 0:
+            best_entropy = entropy
+            best_question = characteristic
+
+        self.last_question = best_question
+        return best_question
+
+    # Función para actualizar el tablero
     def update_board(self, characteristic, answer):
-        # Convert Prolog atoms to strings
+
+        # Formateamos el tablero ya que prolog me da un error con el tipo de formato de las variables de los personajes
         formatted_tablero = "[" + ",".join(f"'{char}'" for char in self.tablero) + "]"
-        if answer:
-            query = f"bajar({characteristic}, {formatted_tablero}, S)"
-        else:
-            query = f"bajar_not({characteristic}, {formatted_tablero}, S)"
-        self.tablero = list(self.prolog.query(query))[0]['S']
+        query = (
+            f"bajar({characteristic}, {formatted_tablero}, S)"
+            if answer
+            else f"bajar_not({characteristic}, {formatted_tablero}, S)"
+        )
+        # Actualizamos el tablero
+        self.tablero = [str(char) for char in list(self.prolog.query(query))[0]["S"]]
 
+    # El juego en si 
     def play(self):
-        print("Welcome to Who is Who!")
+        print("Empieza el juego")
+        # Mientras No esxista solo un personaje en el tablero el juego sigue continuando
         while len(self.tablero) > 1:
-            print(f"Current characters: {self._format_characters(self.tablero)}")
-            resolve = input('Do you want to guess the person [1] or continue [0]?: ')
-            if resolve not in ["0", "1"]:
-                print("Invalid input! Please enter 0 to continue or 1 to guess.")
-                continue
-
-            if resolve == "0":
-                question = input(f"Ask a question about a characteristic {self.characteristics}: ")
-                if question not in self.characteristics:
-                    print("Invalid characteristic! Please choose from the available list.")
-                    continue
-
-                answer = self.ask_question(question)
-                print(f"Does the character have {question}? {'Yes' if answer else 'No'}")
-                self.update_board(question, answer)
+            # Mostramos los personajes que siguen en pie
+            print(f"Personajes en pie: {', '.join(self.tablero)}")
+            # Obtenemos la pregunta
+            best_question = self.select_best_question()
+            if best_question:
+                answer = self.ask_question(best_question)
+                # Mostramos si el personaje tiene esa carcterítica.
+                print(f"El personaje tiene {best_question}? {'Sí' if answer else 'No'}")
+                # Actualizamos el tablero
+                self.update_board(best_question, answer)
             else:
-                guess = input('Please input the name of the character: ')
-                if guess == self.target_character:
-                    print("Congratulations! You guessed it right.")
-                else:
-                    print(f"Oops! That's not correct. The character is: {self._format_character(self.target_character)}")
-                return
-
-        print(f"The character is: {self._format_character(self.tablero[0])}")
-        if len(self.tablero) == 1 and self.tablero[0] == self.target_character:
-            print("Congratulations! You narrowed it down to the right character.")
+                print(
+                    "No se puede encontrar una pregunta óptima, continuando con la estrategia estándar."
+                )
+                question = random.choice(
+                    [
+                        char
+                        for char in self.characteristics
+                        if char != self.last_question
+                    ]
+                )
+                answer = self.ask_question(question)
+                print(f"El personaje tiene {question}? {'Sí' if answer else 'No'}")
+                self.update_board(question, answer)
+        # Mostramos el personaje el cual era el objetivo
+        print(f"El personaje es: {self.tablero[0]}")
+        if self.tablero[0] == self.target_character:
+            print("¡Felicidades! Has acertado el personaje correcto.")
         else:
-            print("Oops! Something went wrong.")
+            print("¡Vaya! Algo salió mal.")
 
-    def _format_characters(self, characters):
-        return [self._format_character(char) for char in characters]
-
-    def _format_character(self, character):
-        return str(character)
 
 if __name__ == "__main__":
     game = WhoIsWhoGame()
