@@ -8,7 +8,7 @@ class WhoIsWhoGame:
     def __init__(self):
         self.prolog = Prolog()
         self.prolog.consult(
-            "/media/TEIS/a23juancm/Python/Tarea-quien-es-quien/quienesquien-main/src/Test.pl"
+            "src/bbd.pl"
         )
         # Realizamos una consulta a la base de datos de prolog para levantar el tablero
         self.tablero = [
